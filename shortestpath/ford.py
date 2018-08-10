@@ -1,3 +1,4 @@
+from .utils import _set_nodes_dict
 from .utils import _initialize_dict
 from .utils import _print_changing
 from .utils import _find_shortest_path_dict
@@ -8,8 +9,9 @@ def ford(g, start, end, debug=False):
     raise NotImplemented
 
 def _ford_dict(g, start, end, debug=False):
-    if not ((start in g) and (end in g)):
-        raise ValueError('start and end node should be exist in graph')
+    from_nodes, to_nodes = _set_nodes_dict(g)
+    if not ((start in from_nodes) and (end in to_nodes)):
+        raise ValueError('There is no path {} - ... - {}'.format(start, end))
 
     n_nodes, n_edges, cost = _initialize_dict(g, start)
 
