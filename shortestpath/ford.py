@@ -1,3 +1,4 @@
+from .utils import _initialize_dict
 from .utils import _print_changing
 from .utils import _find_shortest_path_dict
 
@@ -18,17 +19,6 @@ def _ford_dict(g, start, end, debug=False):
             break
     paths = _find_shortest_path_dict(g, start, end, cost, n_nodes)
     return {'paths': paths, 'cost': cost[end]}
-
-def _initialize_dict(g, start):
-    nodes = set(g.keys())
-    nodes.update(set({n for nw in g.values() for n in nw.keys()}))
-    n_nodes = len(nodes)
-    n_edges = sum((len(nw) for nw in g.values()))
-    max_weight = max(w for nw in g.values() for w in nw.values())
-
-    init_cost = n_nodes * (max_weight + 1)
-    cost = {node:(0 if node == start else init_cost) for node in g}
-    return n_nodes, n_edges, cost
 
 def _update_ford_dict(g, cost, debug=False):
     changed = False

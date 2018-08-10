@@ -18,6 +18,17 @@ def to_dict_graph(x, idx2vocab):
         d[to_csr(i)][to_csr(j)] = w
     return dict(d)
 
+def _initialize_dict(g, start):
+    nodes = set(g.keys())
+    nodes.update(set({n for nw in g.values() for n in nw.keys()}))
+    n_nodes = len(nodes)
+    n_edges = sum((len(nw) for nw in g.values()))
+    max_weight = max(w for nw in g.values() for w in nw.values())
+
+    init_cost = n_nodes * (max_weight + 1)
+    cost = {node:(0 if node == start else init_cost) for node in g}
+    return n_nodes, n_edges, cost
+
 def _print_changing(from_, to_, before, after):
     print('cost[{}]: {} -> {} (from {})'.format(
         to_, before, after, from_))
