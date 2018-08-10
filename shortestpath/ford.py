@@ -1,3 +1,6 @@
+from .utils import _print_changing
+from .utils import _find_shortest_path_dict
+
 def ford(g, start, end, debug=False):
     if isinstance(g, dict):
         return _ford_dict(g, start, end, debug)
@@ -39,24 +42,3 @@ def _update_ford_dict(g, cost, debug=False):
                 if debug:
                     _print_changing(from_, to_, before, after)
     return cost, changed
-
-def _print_changing(from_, to_, before, after):
-    print('cost[{}]: {} -> {} (from {})'.format(
-        to_, before, after, from_))
-
-def _find_shortest_path_dict(g, start, end, cost, n_nodes):
-    immatures = [[start]]
-    mature = []
-    n_iter = 0
-    for _ in range(n_nodes):
-        immatures_ = []
-        for path in immatures:
-            last = path[-1]
-            for adjacent, c in g[last].items():
-                if cost[adjacent] == cost[last] + c:
-                    if adjacent == end:
-                        mature.append([p for p in path] + [adjacent])
-                    else:
-                        immatures_.append([p for p in path] + [adjacent])
-        immatures = immatures_
-    return mature
