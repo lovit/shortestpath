@@ -18,6 +18,11 @@ def to_dict_graph(x, idx2vocab):
         d[to_csr(i)][to_csr(j)] = w
     return dict(d)
 
+def _set_nodes_dict(g):
+    from_nodes = set(g)
+    to_nodes = {node for nw in g.values() for node in nw.keys()}
+    return from_nodes, to_nodes
+
 def _initialize_dict(g, start):
     nodes = set(g.keys())
     nodes.update(set({n for nw in g.values() for n in nw.keys()}))
