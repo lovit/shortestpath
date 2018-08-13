@@ -31,7 +31,7 @@ def _initialize_dict(g, start):
     max_weight = max(w for nw in g.values() for w in nw.values())
 
     init_cost = n_nodes * (max_weight + 1)
-    cost = {node:(0 if node == start else init_cost) for node in g}
+    cost = {node:(0 if node == start else init_cost) for node in nodes}
     return n_nodes, n_edges, cost
 
 def _print_changing(from_, to_, before, after):
