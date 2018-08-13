@@ -7,7 +7,7 @@ def load_sparse_graph_and_index(header):
         idx2vocab = [vocab.strip() for vocab in f]
     return x, idx2vocab
 
-def to_dict_graph(x, idx2vocab):
+def sparse_to_dict_graph(x, idx2vocab):
     def to_csr(i):
         return idx2vocab[i]
 
