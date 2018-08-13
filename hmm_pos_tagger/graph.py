@@ -2,7 +2,7 @@ from collections import defaultdict
 
 class WordSequenceGraph:
 
-    def __init__(self, dictionary, edge_rule):
+    def __init__(self, dictionary, hmm_model):
         self.dictionary = dictionary
         self.hmm_model = hmm_model
 
