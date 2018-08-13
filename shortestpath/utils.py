@@ -18,6 +18,12 @@ def to_dict_graph(x, idx2vocab):
         d[to_csr(i)][to_csr(j)] = w
     return dict(d)
 
+def list_to_dict_graph(list_form):
+    g = defaultdict(lambda: {})
+    for from_, to_, weight in list_form:
+        g[from_][to_] = weight
+    return dict(g)
+
 def _set_nodes_dict(g):
     from_nodes = set(g)
     to_nodes = {node for nw in g.values() for node in nw.keys()}
