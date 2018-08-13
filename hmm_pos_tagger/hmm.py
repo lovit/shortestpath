@@ -1,23 +1,23 @@
 class TrainedHMM:
-"""Usage
---------
-transition = {
-    ('Noun', 'Josa'): 0.7,
-    ('Noun', 'Noun'): 0.3,
-    ('Verb', 'Eomi'): 0.5,
-    ('Verb', 'Noun'): 0.5,
-    ('Verb', 'Josa'): -0.1,
-}
-generation = {
-    'Noun': {
-        '아이오아이': 0.5,
-        '청하': 0.2,
+    """Usage
+    --------
+    transition = {
+        ('Noun', 'Josa'): 0.7,
+        ('Noun', 'Noun'): 0.3,
+        ('Verb', 'Eomi'): 0.5,
+        ('Verb', 'Noun'): 0.5,
+        ('Verb', 'Josa'): -0.1,
     }
-}
+    generation = {
+        'Noun': {
+            '아이오아이': 0.5,
+            '청하': 0.2,
+        }
+    }
 
-hmm_model = TrainedHMM(transition, generation)
-hmm_model.cost(('아이오아이', 'Noun', 0, 5), ('는', 'Josa', 5, 6))
-"""
+    hmm_model = TrainedHMM(transition, generation)
+    hmm_model.cost(('아이오아이', 'Noun', 0, 5), ('는', 'Josa', 5, 6))
+    """
     def __init__(self, transition, generation,
         transition_smoothing=0.0001, generation_smoothing=0.0001):
 
