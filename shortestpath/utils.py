@@ -41,8 +41,8 @@ def _initialize_dict(g, start):
     return n_nodes, n_edges, cost
 
 def _print_changing(from_, to_, before, after):
-    print('cost[{}]: {} -> {} (from {})'.format(
-        to_, before, after, from_))
+    print('cost[{} -> {}] = {} -> {}'.format(
+        from_, to_, before, after))
 
 def _find_shortest_path_dict(g, start, end, cost, n_nodes):
     immatures = [[start]]
