@@ -4,7 +4,12 @@ class CohesionScore:
         self._scores = {}
         self._subword_count = {}
 
-    def __getitem__(self, word, default=0):
+    def __getitem__(self, args):
+        if isinstance(args, str):
+            word = args
+            default = 0
+        else:
+            word, default = args
         return self.get_cohesion(word, default)
 
     def train(self, sentences, min_count=10):
