@@ -1,8 +1,8 @@
 class WordSequenceGraph:
 
-    def __init__(self, cohesion, uni_character_cost=1):
+    def __init__(self, cohesion, cost=lambda word, word_score: len(word) * (1 - word_score) ):
         self.cohesion = cohesion
-        self.uni_character_cost = uni_character_cost
+        self.cost = cost
 
     def as_graph(self, sentence):
         sent = self._sentence_lookup(sentence)
@@ -34,15 +34,15 @@ class WordSequenceGraph:
 
     def _link_adjacent_nodes(self, sent):
 
-        def cost(cohesion, word):
-            return len(word) * self.uni_character_cost - cohesion
-
-        bos = ('BOS', -1, 0)
-        eos = ('EOS', len(sent), len(sent))
+        bos = ('BOS',)
+        eos = ('EOS',)
 
         sent += [[eos]]
 
-        edges = [(bos, first, cost(self.cohesion[first[0], 0], first[0])) for first in sent[0]]
+        edges = [
+            (bos, first, self.cost(first[0], self.cohesion[first[0], 0]))
+             for first in sent[0]
+        ]
         for words in sent[:-1]:
             for word in words:
                 end = word[2]
@@ -50,7 +50,7 @@ class WordSequenceGraph:
                     edges.append(
                         (word,
                          adjacent,
-                         cost(self.cohesion[adjacent[0], 0], adjacent[0])
+                         self.cost(adjacent[0], self.cohesion[adjacent[0], 0])
                         )
                     )
         return edges
