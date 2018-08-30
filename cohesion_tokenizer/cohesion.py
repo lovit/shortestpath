@@ -4,8 +4,8 @@ class CohesionScore:
         self._scores = {}
         self._subword_count = {}
 
-    def __getitem__(self, word):
-        return self.get_cohesion(word)
+    def __getitem__(self, word, default=0):
+        return self.get_cohesion(word, default)
 
     def train(self, sentences, min_count=10):
         self._subword_count = {}
@@ -23,8 +23,8 @@ class CohesionScore:
         self._scores = {word:self.compute_cohesion(word) for word in words}
         print('\rtraining was done with %d sents' % (num_sent + 1))
 
-    def get_cohesion(self, word):
-        return self._scores.get(word, 0)
+    def get_cohesion(self, word, default=0):
+        return self._scores.get(word, default)
 
     def compute_cohesion(self, word):
 
