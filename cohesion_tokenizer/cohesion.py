@@ -41,4 +41,4 @@ class CohesionScore:
         if base_freq == 0:
             return 0.0
         else:
-            return np.power((word_freq / base_freq), 1 / (len(word) - 1))
+            return (word_freq / base_freq) ** (1 / (len(word) - 1))
