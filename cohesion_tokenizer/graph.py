@@ -20,21 +20,23 @@ class WordSequenceGraph:
     def _word_lookup(self, eojeol, offset=0):
         n = len(eojeol)
         # (word, score, begin, end)
-        words = [[(eojeol[i], i, i+1)] for i in range(n)]
+        words = [[(eojeol[i], offset + i, offset + i + 1)] for i in range(n)]
         for b in range(n):
-            for r in range(2, self.cohesion.max_l_length+1):
-                e = b+r
+            for r in range(2, self.cohesion.max_l_length + 1):
+                e = b + r
                 if e > n:
                     continue
                 sub = eojeol[b:e]
                 score = self.cohesion[sub]
                 if score > 0:
-                    words[b].append((sub, b, e))
+                    words[b].append((sub, offset + b, offset + e))
         return words
 
     def _link_adjacent_nodes(self, sent):
         bos = ('BOS', -1, 0)
         eos = ('EOS', len(sent), len(sent))
+
+        sent += [[eos]]
 
         edges = [(bos, first, self.cohesion[first[0]]) for first in sent[0]]
         for words in sent[:-1]:
@@ -42,5 +44,4 @@ class WordSequenceGraph:
                 end = word[2]
                 for adjacent in sent[end]:
                     edges.append((word, adjacent, self.cohesion[adjacent[0]]))
-        edges += [(last, eos, 0) for last in sent[-1]]
         return edges
