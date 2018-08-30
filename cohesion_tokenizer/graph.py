@@ -38,10 +38,15 @@ class WordSequenceGraph:
 
         sent += [[eos]]
 
-        edges = [(bos, first, self.cohesion[first[0]]) for first in sent[0]]
+        edges = [(bos, first, self.cohesion[first[0], self.uni_character_cost]) for first in sent[0]]
         for words in sent[:-1]:
             for word in words:
                 end = word[2]
                 for adjacent in sent[end]:
-                    edges.append((word, adjacent, self.cohesion[adjacent[0]]))
+                    edges.append(
+                        (word,
+                         adjacent,
+                         self.cohesion[adjacent[0], self.uni_character_cost]
+                        )
+                    )
         return edges
