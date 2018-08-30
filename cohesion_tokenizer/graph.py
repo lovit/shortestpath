@@ -7,13 +7,15 @@ class WordSequenceGraph:
     def as_graph(self, sentence):
         raise NotImplemented
 
-    def _sentence_lookup(sentence):
+    def _sentence_lookup(self, sentence):
+        offset = 0
         sent = []
         for eojeol in sentence.split():
-            sent += word_lookup(eojeol, offset=len(sent))
+            sent += self._word_lookup(eojeol, offset)
+            offset += len(eojeol)
         return sent
 
-    def _word_lookup(eojeol, offset=0):
+    def _word_lookup(self, eojeol, offset=0):
         n = len(eojeol)
         # (word, score, begin, end)
         words = [[(eojeol[i], 0, i, i+1)] for i in range(n)]
