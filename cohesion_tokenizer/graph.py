@@ -31,3 +31,16 @@ class WordSequenceGraph:
                 if score > 0:
                     words[b].append((sub, b, e))
         return words
+
+    def _link_adjacent_nodes(self, sent):
+        bos = ('BOS', -1, 0)
+        eos = ('EOS', len(sent), len(sent))
+
+        edges = [(bos, first, self.cohesion[first[0]]) for first in sent[0]]
+        for words in sent[:-1]:
+            for word in words:
+                end = word[2]
+                for adjacent in sent[end]:
+                    edges.append((word, adjacent, self.cohesion[adjacent[0]]))
+        edges += [(last, eos, 0) for last in sent[-1]]
+        return edges
