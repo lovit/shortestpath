@@ -24,6 +24,19 @@ def _ford_dict(g, start, end, debug=False):
     paths = _find_shortest_path_dict(g, start, end, cost, n_nodes)
     return {'paths': paths, 'cost': cost[end]}
 
+def _update_ford_dict(g, cost, debug=False):
+    changed = False
+    for from_, to_weight in g.items():
+        for to_, weight in to_weight.items():
+            if cost[to_] > cost[from_] + weight:
+                before = cost[to_]
+                after = cost[from_] + weight
+                cost[to_] = after
+                changed = True
+                if debug:
+                    _print_changing(from_, to_, before, after)
+    return cost, changed
+
 def _ford_list(E, V, S, T):
 
     ## Initialize ##
@@ -66,16 +79,3 @@ def _ford_list(E, V, S, T):
     path.append(S)
 
     return {'paths':[path[::-1]], 'cost':d[T]}
-
-def _update_ford_dict(g, cost, debug=False):
-    changed = False
-    for from_, to_weight in g.items():
-        for to_, weight in to_weight.items():
-            if cost[to_] > cost[from_] + weight:
-                before = cost[to_]
-                after = cost[from_] + weight
-                cost[to_] = after
-                changed = True
-                if debug:
-                    _print_changing(from_, to_, before, after)
-    return cost, changed
