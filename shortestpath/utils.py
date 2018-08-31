@@ -24,6 +24,16 @@ def list_to_dict_graph(list_form):
         g[from_][to_] = weight
     return dict(g)
 
+def dict_to_list_graph(g):
+    edges = []
+    nodes = set()
+    for from_node, to_node_weight in g.items():
+        nodes.add(from_node)
+        for to_node, weight in to_node_weight.items():
+            nodes.add(to_node)
+            edges.append((from_node, to_node, weight))
+    return edges, nodes
+
 def _set_nodes_dict(g):
     from_nodes = set(g)
     to_nodes = {node for nw in g.values() for node in nw.keys()}
