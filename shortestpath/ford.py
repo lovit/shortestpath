@@ -53,18 +53,18 @@ def _ford_list(E, V, S, T):
     for _ in range(len(V)):
         # for early stop
         changed = False
-        for U, V, Wuv in E:
-            d_new = d[U] + Wuv
-            if d_new < d[V]:
-                d[V] = d_new
-                prev[V] = U
+        for u, v, Wuv in E:
+            d_new = d[u] + Wuv
+            if d_new < d[v]:
+                d[v] = d_new
+                prev[v] = u
                 changed = True
         if not changed:
             break
 
     # Checking negative cycle loop
-    for U, V, Wuv in E:
-        if d[U] + Wuv < d[V]:
+    for u, v, Wuv in E:
+        if d[u] + Wuv < d[v]:
             raise ValueError('Negative cycle exists')
 
     # Finding path
